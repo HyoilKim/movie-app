@@ -1,64 +1,21 @@
 import React from "react";
-import axios from "axios"
-import Movie from "./Movie.js";
-import "./App.css"
+import { BrowserRouter, HashRouter, Route } from "react-router-dom";
+import About from "./routes/About";
+import Home from "./routes/Home";
+import Detail from "./routes/Detail";
+import Navigation from "./components/Navigation"
 
-class App extends React.Component{
-  state = {
-    isLoading: true,
-    movies: [] // 초기화 안해도 ok
-  };
-
-  // async, await 를 하지 않으면 js에서 요청을 기다리지 않는다
-  getMovies = async () => {
-    // es6 적용 x
-    // const movies = await axios.get("https://yts.mx/api/v2/list_movies.json")
-    // console.log(movies.data.data.movies)
-
-    // es6 적용
-    // axios: fetch 위의 layer(땅콩을 둘러싼 초콜릿)
-    const { 
-      data: {
-        data: { movies }
-      }
-    } = await axios.get("https://yts.mx/api/v2/list_movies.json?sort_by=rating")
-    // this.setState({movies: movies})
-    this.setState({movies, isLoading: false})
-
-  }
-
-  // first cycle(when: after first render)
-  // fetch data
-  componentDidMount(){
-    this.getMovies(); 
-  }
-
-  render(){
-    const {isLoading} = this.state;
-    return (
-      <section className="container">
-        {isLoading ? (
-          <div className="loader">
-            <span className="loader__text">Loading...</span>
-          </div>
-        ) : (
-          <div className="movies">
-            {this.state.movies.map(movie => (
-            <Movie 
-              key={movie.id}
-              id={movie.id} 
-              year={movie.year} 
-              title={movie.title} 
-              summary={movie.summary} 
-              poster={movie.medium_cover_image}
-              genres={movie.genres}
-            />
-          ))}
-          </div>
-        )}
-      </section>
-    );
-  }
+function App(){
+  return <HashRouter>
+    {/* BrowserRouter는 url에 #이 사라지지만 github page에 배포하기 힘듦 */}
+    {/* Navigation 안의 Link는 Router안에 있어야 함 */}
+    {/* movie-detail에 데이터가 전달될 수 있는 이유는 Route에 있기 때문 */}
+    <Navigation/> 
+    <Route path="/" exact={true} component={Home}/>
+    <Route path="/about" component={About} />
+    {/* <Route path="/movie/moive-detail" component={Detail}/> */}
+    <Route path="/movie/:id" component={Detail}/>
+  </HashRouter> 
 }
 
 export default App;
