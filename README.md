@@ -1,8 +1,10 @@
 # Movie app
 
-### skills
+### Skills
 React, JavaScript
-### desc
+### Desc
 API를 사용하여 영화를 보여주는 웹 사이트
-### link
+### Link
 https://kimhyoil.github.io/movie-app/
+### Image
+
