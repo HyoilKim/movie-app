@@ -34,7 +34,7 @@ class Home extends React.Component{
   }
 
   render(){
-    const {isLoading} = this.state;
+    const {isLoading, movies} = this.state;
     return (
       <section className="container">
         {isLoading ? (
@@ -43,7 +43,7 @@ class Home extends React.Component{
           </div>
         ) : (
           <div className="movies">
-            {this.state.movies.map(movie => (
+            {movies.map(movie => (
             <Movie 
               key={movie.id}
               id={movie.id} 
